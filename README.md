@@ -1,4 +1,4 @@
-BLUX OPERATING CHECKLIST
+# BLUX OPERATING CHECKLIST
 (Authority-Safe / Burnout-Resistant)
 
 PURPOSE
