@@ -11,8 +11,11 @@ PURPOSE
 1. AUTHORITY CHECK (MANDATORY)
 --------------------------------
 □ Am I the one making the decision?
+
 □ Is this a values, direction, or exposure choice?
+
     → If YES: AI may NOT decide.
+    
     → If NO: Proceed to delegation.
 
 RULE: AI executes. I decide.
@@ -21,7 +24,9 @@ RULE: AI executes. I decide.
 2. ROUTING RULE (LOCKED)
 --------------------------------
 □ Has this request passed through ChatGPT first?
+
     → If NO: STOP.
+    
     → If YES: Continue.
 
 RULE: No direct prompting of other AIs.
@@ -32,23 +37,33 @@ RULE: No direct prompting of other AIs.
 Select ONE category only:
 
 □ STRUCTURAL / ARCHITECTURAL
+
    → Tool: ChatGPT
+   
    → Examples: contracts, boundaries, CI rules, repo structure
 
 □ MECHANICAL CODE LABOR
+
    → Tool: DeepSeek or Copilot
+   
    → Examples: refactors, scripts, regex, boilerplate
 
 □ ADVERSARIAL REVIEW
+
    → Tool: Claude
+   
    → Examples: ambiguity detection, authority bleed, misread risk
 
 □ INLINE SPEED / FATIGUE REDUCTION
+
    → Tool: GitHub Copilot
+   
    → Examples: typing assistance, repetitive edits
 
 □ AUTOMATION / BATCH ANALYSIS
+
    → Tool: OpenAI API (terminal)
+   
    → Examples: repo scans, validation scripts, CI helpers
 
 RULE: One task → one tool → one pass.
@@ -59,9 +74,13 @@ RULE: One task → one tool → one pass.
 Before execution, confirm:
 
 □ AI is NOT deciding values
+
 □ AI is NOT deciding exposure
+
 □ AI is NOT deciding timing
+
 □ AI is NOT making irreversible choices
+
 □ AI is NOT speaking for me
 
 If any box cannot be checked → STOP.
@@ -84,7 +103,9 @@ RULE: No parallel AI “thinking”.
 6. COST & ENERGY GUARD
 --------------------------------
 □ Is this task worth my attention right now?
+
 □ Can this be delayed without harm?
+
 □ Can AI reduce my load here?
 
 RULE: Protect nervous system before system output.
@@ -93,9 +114,13 @@ RULE: Protect nervous system before system output.
 7. STOP CONDITIONS
 --------------------------------
 Immediately stop if:
+
 □ I feel compelled to over-explain
+
 □ I feel pressure to expose myself
+
 □ I feel like I must “prove” integrity
+
 □ I am tired, angry, or in pain
 
 RULE: No irreversible actions under load.
@@ -104,16 +129,25 @@ RULE: No irreversible actions under load.
 8. FORWARD MOTION DEFINITION
 --------------------------------
 Progress means:
+
 □ Smaller surface area
+
 □ Harder boundaries
+
 □ Clearer non-capabilities
+
 □ Less personal exposure
+
 □ More boring correctness
 
 Progress does NOT mean:
+
 □ Adoption
+
 □ Validation
+
 □ Visibility
+
 □ Defense
 
 --------------------------------
