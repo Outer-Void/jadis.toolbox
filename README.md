@@ -123,6 +123,8 @@ Immediately stop if:
 
 □ I am tired, angry, or in pain
 
+□ I am switching tools to feel relief instead of clarity
+
 RULE: No irreversible actions under load.
 
 --------------------------------
