@@ -124,8 +124,8 @@ Use `grep` or `awk` to filter project history.
 
 ## 🧠 License
 
-This script is open and free to use under the MIT License.
-You are encouraged to modify and extend it — this is a tool meant to evolve with you.
+Proprietary: part of jadis.toolbox under the Outer-Void Proprietary License (see the repository `LICENSE`).
+Copies obtained before 2026-10-25 remain available under the MIT License they were published with.
 
 > “Track your time like your art — precisely, purposefully, and with heart.”
 
