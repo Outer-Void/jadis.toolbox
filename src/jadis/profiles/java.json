@@ -1,0 +1,46 @@
+{
+ "profile": "java",
+ "summary": "JDK for Gradle/Android builds",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "java",
+   "min": "17"
+  },
+  {
+   "tool": "javac",
+   "min": "17"
+  }
+ ],
+ "optional": [
+  {
+   "tool": "gradle"
+  }
+ ],
+ "checks": [
+  "java.java-home",
+  "java.gradle-wrapper"
+ ],
+ "packages": {
+  "termux": {
+   "java": "openjdk-21",
+   "javac": "openjdk-21",
+   "gradle": "gradle"
+  },
+  "apt": {
+   "java": "openjdk-21-jdk-headless",
+   "javac": "openjdk-21-jdk-headless"
+  }
+ },
+ "notes": [
+  "Prefer each project's Gradle wrapper; Debian's packaged gradle is far older than current Android builds need."
+ ]
+}

@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jadis-toolbox"
+version = "0.1.0"
+description = "Portable developer-workstation diagnostics, bootstrap and safe repair for Termux, PRoot Debian and Debian"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "LicenseRef-Outer-Void-Proprietary"
+license-files = ["LICENSE"]
+authors = [{ name = "Outer-Void / Justadudeinspace (JADIS)", email = "outervoid.blux@gmail.com" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7.4", "ruff>=0.6", "mypy>=1.11"]
+
+[project.scripts]
+jadis = "jadis.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+jadis = ["profiles/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E731", "E501"]  # code layout is ruff format's job; long human-readable messages stay on one line
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src/jadis"]
+ignore_missing_imports = true

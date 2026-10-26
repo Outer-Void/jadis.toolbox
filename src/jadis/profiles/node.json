@@ -1,0 +1,37 @@
+{
+ "profile": "node",
+ "summary": "Node.js development",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "node",
+   "min": "18"
+  },
+  {
+   "tool": "npm"
+  }
+ ],
+ "optional": [],
+ "checks": [
+  "node.lockfiles"
+ ],
+ "packages": {
+  "termux": {
+   "node": "nodejs",
+   "npm": "nodejs"
+  },
+  "apt": {
+   "node": "nodejs",
+   "npm": "npm"
+  }
+ },
+ "notes": []
+}

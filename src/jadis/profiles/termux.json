@@ -1,0 +1,21 @@
+{
+ "profile": "termux",
+ "summary": "Native Termux specifics",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "termux"
+ ],
+ "requires": [],
+ "optional": [],
+ "checks": [
+  "termux.storage",
+  "termux.api"
+ ],
+ "packages": {
+  "termux": {},
+  "apt": {}
+ },
+ "notes": []
+}

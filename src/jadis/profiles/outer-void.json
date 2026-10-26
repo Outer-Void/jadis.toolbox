@@ -1,0 +1,82 @@
+{
+ "profile": "outer-void",
+ "summary": "Readiness for the Outer Void organization's project classes",
+ "extends": [
+  "git",
+  "python"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "python3",
+   "min": "3.11"
+  },
+  {
+   "tool": "zip"
+  },
+  {
+   "tool": "unzip"
+  }
+ ],
+ "optional": [
+  {
+   "tool": "node"
+  },
+  {
+   "tool": "npm"
+  },
+  {
+   "tool": "java"
+  },
+  {
+   "tool": "javac"
+  },
+  {
+   "tool": "adb"
+  },
+  {
+   "tool": "jq"
+  },
+  {
+   "tool": "gh"
+  },
+  {
+   "tool": "make"
+  }
+ ],
+ "checks": [
+  "java.java-home",
+  "android.sdk",
+  "android.build-tools-arch"
+ ],
+ "packages": {
+  "termux": {
+   "zip": "zip",
+   "unzip": "unzip",
+   "node": "nodejs",
+   "npm": "nodejs",
+   "java": "openjdk-21",
+   "javac": "openjdk-21",
+   "adb": "android-tools",
+   "make": "make"
+  },
+  "apt": {
+   "zip": "zip",
+   "unzip": "unzip",
+   "node": "nodejs",
+   "npm": "npm",
+   "java": "openjdk-21-jdk-headless",
+   "javac": "openjdk-21-jdk-headless",
+   "adb": "adb",
+   "make": "make"
+  }
+ },
+ "notes": [
+  "Python 3.11+ covers BLUX, DAT, LRC, GOD and the engines; Node is needed only for web frontends; Java/Android only for Android projects."
+ ]
+}

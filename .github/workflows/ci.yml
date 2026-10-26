@@ -1,0 +1,57 @@
+name: JADIS Toolbox CI
+# Evidence levels: this workflow is UNIT/FIXTURE/INTEGRATION/BUILD testing on GitHub's Ubuntu runners plus a
+# real Debian 13 container. It has no Termux or Android hardware: Termux and PRoot behaviour is tested with
+# synthetic fixtures (tests/fixtures), never claimed as device validation.
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[dev]" build
+      - name: Tests (unit, fixture, integration on a temporary filesystem)
+        run: python -m pytest -q
+      - name: Lint, format, types
+        run: |
+          ruff check src tests tools
+          ruff format --check src tests tools
+          mypy
+      - name: Profiles and repository hygiene (secrets, personal paths, Markdown links)
+        run: |
+          jadis profiles validate
+          python tools/repo_hygiene.py
+      - name: Packaging smoke test from a fresh virtualenv
+        run: |
+          python -m build --wheel --outdir dist .
+          python -m venv /tmp/clean
+          /tmp/clean/bin/pip install dist/*.whl
+          cd /tmp
+          /tmp/clean/bin/jadis --help
+          /tmp/clean/bin/jadis env
+          /tmp/clean/bin/jadis doctor || test $? -eq 1   # exit 1 = a required check failed on this runner, not a crash
+          /tmp/clean/bin/jadis completion bash > /dev/null
+  debian13:
+    runs-on: ubuntu-latest
+    container: debian:13
+    steps:
+      - uses: actions/checkout@v4
+      - run: apt-get update && apt-get install -y --no-install-recommends python3 python3-venv git ca-certificates
+      - name: Install and run on real Debian 13 (container, root, no sudo)
+        run: |
+          python3 -m venv /tmp/v
+          /tmp/v/bin/pip install .
+          cd /tmp
+          /tmp/v/bin/jadis env --json > env.json
+          python3 -c "import json; k=json.load(open('env.json'))['classification']['kind']; print(k); assert k == 'debian', k"
+          /tmp/v/bin/jadis doctor --profile minimal || test $? -eq 1
+          /tmp/v/bin/jadis bootstrap minimal --plan

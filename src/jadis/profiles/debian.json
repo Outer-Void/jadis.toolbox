@@ -1,0 +1,25 @@
+{
+ "profile": "debian",
+ "summary": "Debian / PRoot Debian specifics",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [],
+ "optional": [],
+ "checks": [
+  "debian.apt",
+  "debian.locale",
+  "proot.identity",
+  "proot.limits"
+ ],
+ "packages": {
+  "termux": {},
+  "apt": {}
+ },
+ "notes": []
+}

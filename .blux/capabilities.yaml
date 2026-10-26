@@ -1,0 +1,77 @@
+# JADIS Toolbox capabilities for BLUX. All read-only: repair, bootstrap, venv and restore have NO BLUX capability,
+# so BLUX can never reach a mutation. Mutation stays behind jadis's own authorization (--yes / interactive).
+contract: blux.capability-set
+contract_version: "1.0"
+capabilities:
+  - contract: blux.capability
+    contract_version: "1.0"
+    capability_id: environment.inspect
+    version: 0.1.0
+    summary: "Environment fingerprint: classification, distribution, architecture, identity, storage (no tools)."
+    contract_versions: ["1.0"]
+    input_schema: {"type": "object", "additionalProperties": false, "properties": {}}
+    output_schema: {"type": "object", "required": ["format", "classification", "architecture"]}
+    side_effects: read
+    required_permissions: ["workstation:read"]
+    idempotent: true
+    timeout_ms: 120000
+    provider:
+      repository: Outer-Void/jadis.toolbox
+      kind: subprocess
+      entrypoint: jadis blux-capability environment.inspect
+    labels:
+      authority: read-only
+  - contract: blux.capability
+    contract_version: "1.0"
+    capability_id: environment.doctor
+    version: 0.1.0
+    summary: "Evaluate the workstation against a jadis profile (read-only; never repairs)."
+    contract_versions: ["1.0"]
+    input_schema: {"type": "object", "additionalProperties": false, "properties": {"profile": {"type": "string", "minLength": 1, "maxLength": 64}}}
+    output_schema: {"type": "object", "required": ["profile", "environment", "summary", "checks"]}
+    side_effects: read
+    required_permissions: ["workstation:read"]
+    idempotent: true
+    timeout_ms: 120000
+    provider:
+      repository: Outer-Void/jadis.toolbox
+      kind: subprocess
+      entrypoint: jadis blux-capability environment.doctor
+    labels:
+      authority: read-only
+  - contract: blux.capability
+    contract_version: "1.0"
+    capability_id: environment.snapshot
+    version: 0.1.0
+    summary: "Reproducibility snapshot: fingerprint plus doctor results, secrets redacted."
+    contract_versions: ["1.0"]
+    input_schema: {"type": "object", "additionalProperties": false, "properties": {"profile": {"type": "string", "minLength": 1, "maxLength": 64}}}
+    output_schema: {"type": "object", "required": ["format", "profile", "environment", "doctor"]}
+    side_effects: read
+    required_permissions: ["workstation:read"]
+    idempotent: true
+    timeout_ms: 120000
+    provider:
+      repository: Outer-Void/jadis.toolbox
+      kind: subprocess
+      entrypoint: jadis blux-capability environment.snapshot
+    labels:
+      authority: read-only
+  - contract: blux.capability
+    contract_version: "1.0"
+    capability_id: toolchain.inspect
+    version: 0.1.0
+    summary: "Installed developer tools with versions and origins, Android SDK and JAVA_HOME state."
+    contract_versions: ["1.0"]
+    input_schema: {"type": "object", "additionalProperties": false, "properties": {}}
+    output_schema: {"type": "object", "required": ["tools", "android_sdk", "java_home"]}
+    side_effects: read
+    required_permissions: ["workstation:read"]
+    idempotent: true
+    timeout_ms: 120000
+    provider:
+      repository: Outer-Void/jadis.toolbox
+      kind: subprocess
+      entrypoint: jadis blux-capability toolchain.inspect
+    labels:
+      authority: read-only

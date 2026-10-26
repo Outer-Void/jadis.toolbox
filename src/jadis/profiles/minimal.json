@@ -1,0 +1,63 @@
+{
+ "profile": "minimal",
+ "summary": "Shell, PATH and core utilities every environment needs",
+ "extends": [],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "git"
+  },
+  {
+   "tool": "tar"
+  },
+  {
+   "tool": "curl"
+  }
+ ],
+ "optional": [
+  {
+   "tool": "jq"
+  },
+  {
+   "tool": "zip"
+  },
+  {
+   "tool": "unzip"
+  }
+ ],
+ "checks": [
+  "env.classified",
+  "env.supported",
+  "path.duplicates",
+  "path.dead",
+  "path.termux-leak",
+  "shell.shadows",
+  "shell.startup-files",
+  "disk.free",
+  "network.local"
+ ],
+ "packages": {
+  "termux": {
+   "git": "git",
+   "tar": "tar",
+   "curl": "curl",
+   "jq": "jq",
+   "zip": "zip",
+   "unzip": "unzip"
+  },
+  "apt": {
+   "git": "git",
+   "tar": "tar",
+   "curl": "curl",
+   "jq": "jq",
+   "zip": "zip",
+   "unzip": "unzip"
+  }
+ },
+ "notes": []
+}

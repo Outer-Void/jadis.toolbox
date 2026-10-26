@@ -1,0 +1,26 @@
+{
+ "profile": "full",
+ "summary": "Everything jadis knows how to check",
+ "extends": [
+  "outer-void",
+  "node",
+  "android",
+  "llm",
+  "termux",
+  "debian"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [],
+ "optional": [],
+ "checks": [],
+ "packages": {
+  "termux": {},
+  "apt": {}
+ },
+ "notes": []
+}

@@ -1,0 +1,44 @@
+{
+ "profile": "git",
+ "summary": "Git and SSH workstation readiness",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "git",
+   "min": "2.30"
+  },
+  {
+   "tool": "ssh"
+  }
+ ],
+ "optional": [
+  {
+   "tool": "gh"
+  }
+ ],
+ "checks": [
+  "git.identity",
+  "git.default-branch",
+  "ssh.dir-permissions",
+  "ssh.agent"
+ ],
+ "packages": {
+  "termux": {
+   "ssh": "openssh",
+   "gh": "gh"
+  },
+  "apt": {
+   "ssh": "openssh-client",
+   "gh": "gh"
+  }
+ },
+ "notes": []
+}

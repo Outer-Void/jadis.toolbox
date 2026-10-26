@@ -1,0 +1,40 @@
+{
+ "profile": "android",
+ "summary": "Command-line Android development (no Android Studio)",
+ "extends": [
+  "java"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [],
+ "optional": [
+  {
+   "tool": "adb"
+  },
+  {
+   "tool": "fastboot"
+  }
+ ],
+ "checks": [
+  "android.sdk",
+  "android.sdk-env",
+  "android.build-tools-arch"
+ ],
+ "packages": {
+  "termux": {
+   "adb": "android-tools",
+   "fastboot": "android-tools"
+  },
+  "apt": {
+   "adb": "adb",
+   "fastboot": "fastboot"
+  }
+ },
+ "notes": [
+  "Google's Linux build-tools ship x86_64 aapt2. On aarch64 (Termux/PRoot) pass -Pandroid.aapt2FromMavenOverride=<native aapt2>; jadis reports this, it does not rewrite a working SDK layout."
+ ]
+}

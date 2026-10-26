@@ -1,0 +1,103 @@
+{
+ "commands": {
+  "/data/data/com.termux/files/usr/bin/curl --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "curl 8.14.1 (aarch64-unknown-linux-gnu)\n"
+  },
+  "/data/data/com.termux/files/usr/bin/find --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "find (GNU findutils) 4.10.0\n"
+  },
+  "/data/data/com.termux/files/usr/bin/git --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "git version 2.47.3\n"
+  },
+  "/data/data/com.termux/files/usr/bin/grep --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "grep (GNU grep) 3.11\n"
+  },
+  "/data/data/com.termux/files/usr/bin/python3 --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "Python 3.13.5\n"
+  },
+  "/data/data/com.termux/files/usr/bin/python3 -m pip --version": {
+   "rc": 0,
+   "stdout": "pip 25.1.1 from /x (python 3.13)\n"
+  },
+  "/data/data/com.termux/files/usr/bin/sed --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "sed (GNU sed) 4.9\n"
+  },
+  "/data/data/com.termux/files/usr/bin/tar --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "tar (GNU tar) 1.35\n"
+  },
+  "git config --global --get init.defaultBranch": {
+   "rc": 0,
+   "stdout": "main\n"
+  },
+  "git config --global --get user.email": {
+   "rc": 0,
+   "stdout": "test@example.invalid\n"
+  },
+  "git config --global --get user.name": {
+   "rc": 0,
+   "stdout": "Test User\n"
+  },
+  "python3 -c import venv, ensurepip": {
+   "rc": 0,
+   "stdout": ""
+  },
+  "uname -m": {
+   "rc": 0,
+   "stdout": "aarch64\n"
+  }
+ },
+ "disk": {
+  "/data/data/com.termux/files/home": [
+   32212254720,
+   107374182400
+  ]
+ },
+ "env": {
+  "ANDROID_ROOT": "/system",
+  "HOME": "/data/data/com.termux/files/home",
+  "LANG": "en_US.UTF-8",
+  "PATH": "/data/data/com.termux/files/usr/bin",
+  "PREFIX": "/data/data/com.termux/files/usr",
+  "SHELL": "/data/data/com.termux/files/usr/bin/bash",
+  "TERMUX_VERSION": "0.118.3"
+ },
+ "executables": {
+  "curl": "/data/data/com.termux/files/usr/bin/curl",
+  "find": "/data/data/com.termux/files/usr/bin/find",
+  "git": "/data/data/com.termux/files/usr/bin/git",
+  "grep": "/data/data/com.termux/files/usr/bin/grep",
+  "pkg": "/data/data/com.termux/files/usr/bin/pkg",
+  "python3": "/data/data/com.termux/files/usr/bin/python3",
+  "sed": "/data/data/com.termux/files/usr/bin/sed",
+  "tar": "/data/data/com.termux/files/usr/bin/tar"
+ },
+ "files": {
+  "/data/data/com.termux/files/home/.bashrc": "alias ll='ls -l'\n",
+  "/data/data/com.termux/files/home/storage": null,
+  "/data/data/com.termux/files/usr/bin": null,
+  "/data/data/com.termux/files/usr/bin/pkg": "#!/bin/sh\n",
+  "/proc/meminfo": "MemTotal:        5582336 kB\nMemFree:          400000 kB\nMemAvailable:    1691648 kB\n",
+  "/proc/self/status": "Name:\tpython3\nTracerPid:\t0\n",
+  "/proc/sys/kernel/osrelease": "6.1.99-android14\n",
+  "/storage/emulated/0/Download": null,
+  "/system/build.prop": "ro.build.version.sdk=36\n",
+  "/usr/bin": null
+ },
+ "links": {},
+ "modes": {},
+ "uid": 1000
+}

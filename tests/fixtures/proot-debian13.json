@@ -1,0 +1,114 @@
+{
+ "commands": {
+  "/usr/bin/curl --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "curl 8.14.1 (aarch64-unknown-linux-gnu)\n"
+  },
+  "/usr/bin/find --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "find (GNU findutils) 4.10.0\n"
+  },
+  "/usr/bin/git --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "git version 2.47.3\n"
+  },
+  "/usr/bin/grep --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "grep (GNU grep) 3.11\n"
+  },
+  "/usr/bin/python3 --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "Python 3.13.5\n"
+  },
+  "/usr/bin/python3 -m pip --version": {
+   "rc": 0,
+   "stdout": "pip 25.1.1 from /x (python 3.13)\n"
+  },
+  "/usr/bin/sed --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "sed (GNU sed) 4.9\n"
+  },
+  "/usr/bin/tar --version": {
+   "rc": 0,
+   "stderr": "",
+   "stdout": "tar (GNU tar) 1.35\n"
+  },
+  "git config --global --get init.defaultBranch": {
+   "rc": 0,
+   "stdout": "main\n"
+  },
+  "git config --global --get user.email": {
+   "rc": 0,
+   "stdout": "test@example.invalid\n"
+  },
+  "git config --global --get user.name": {
+   "rc": 0,
+   "stdout": "Test User\n"
+  },
+  "ldd --version": {
+   "rc": 0,
+   "stdout": "ldd (Debian GLIBC 2.41-12) 2.41\n"
+  },
+  "python3 -c import venv, ensurepip": {
+   "rc": 0,
+   "stdout": ""
+  },
+  "uname -m": {
+   "rc": 0,
+   "stdout": "aarch64\n"
+  },
+  "uname -r": {
+   "rc": 0,
+   "stdout": "6.17.0-PRoot-Distro\n"
+  }
+ },
+ "disk": {
+  "/home/dev": [
+   32212254720,
+   107374182400
+  ]
+ },
+ "env": {
+  "ANDROID_ROOT": "/system",
+  "HOME": "/home/dev",
+  "LANG": "C.UTF-8",
+  "PATH": "/usr/local/bin:/usr/bin:/data/data/com.termux/files/usr/bin",
+  "PROOT_L2S_DIR": "/x/.l2s",
+  "SHELL": "/usr/bin/zsh"
+ },
+ "executables": {
+  "apt-get": "/usr/bin/apt-get",
+  "curl": "/usr/bin/curl",
+  "find": "/usr/bin/find",
+  "git": "/usr/bin/git",
+  "grep": "/usr/bin/grep",
+  "pkg": "/data/data/com.termux/files/usr/bin/pkg",
+  "python3": "/usr/bin/python3",
+  "sed": "/usr/bin/sed",
+  "sudo": "/usr/bin/sudo",
+  "tar": "/usr/bin/tar"
+ },
+ "files": {
+  "/data/data/com.termux/files/usr/bin": null,
+  "/data/data/com.termux/files/usr/bin/pkg": "#!/bin/sh\n",
+  "/etc/os-release": "PRETTY_NAME=\"Debian GNU/Linux 13 (trixie)\"\nNAME=\"Debian GNU/Linux\"\nVERSION_ID=\"13\"\nVERSION_CODENAME=trixie\nID=debian\n",
+  "/home/dev/.zshrc": "export PATH\n",
+  "/proc/4242/comm": "proot\n",
+  "/proc/meminfo": "MemTotal:        5582336 kB\nMemFree:          400000 kB\nMemAvailable:    1691648 kB\n",
+  "/proc/net/route": "Iface\tDestination\tGateway\nwlan0\t00000000\t0101A8C0\n",
+  "/proc/self/status": "Name:\tpython3\nTracerPid:\t4242\n",
+  "/storage/emulated/0/Download": null,
+  "/system/build.prop": "x\n",
+  "/usr/bin": null,
+  "/usr/local/bin": null
+ },
+ "links": {},
+ "modes": {},
+ "uid": 1000
+}

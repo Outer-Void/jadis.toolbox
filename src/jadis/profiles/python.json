@@ -1,0 +1,41 @@
+{
+ "profile": "python",
+ "summary": "Python development: interpreter, pip, venv",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "python3",
+   "min": "3.10"
+  },
+  {
+   "tool": "pip"
+  }
+ ],
+ "optional": [],
+ "checks": [
+  "python.venv-module",
+  "python.externally-managed",
+  "python.project-venv"
+ ],
+ "packages": {
+  "termux": {
+   "python3": "python",
+   "pip": "python-pip"
+  },
+  "apt": {
+   "python3": "python3",
+   "pip": "python3-pip"
+  }
+ },
+ "notes": [
+  "Debian 12+ marks the system Python externally managed: install project dependencies into a .venv, never with sudo pip."
+ ]
+}

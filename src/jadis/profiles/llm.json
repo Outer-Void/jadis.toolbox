@@ -1,0 +1,64 @@
+{
+ "profile": "llm",
+ "summary": "Local LLM tooling (llama.cpp, optional Vulkan)",
+ "extends": [
+  "minimal"
+ ],
+ "environments": [
+  "termux",
+  "proot-debian",
+  "debian",
+  "debian-family"
+ ],
+ "requires": [
+  {
+   "tool": "cmake"
+  },
+  {
+   "tool": "git"
+  }
+ ],
+ "optional": [
+  {
+   "tool": "clang"
+  },
+  {
+   "tool": "gcc"
+  },
+  {
+   "tool": "make"
+  },
+  {
+   "tool": "vulkaninfo"
+  },
+  {
+   "tool": "llama-cli"
+  },
+  {
+   "tool": "llama-server"
+  }
+ ],
+ "checks": [
+  "vulkan.state",
+  "llm.llama"
+ ],
+ "packages": {
+  "termux": {
+   "cmake": "cmake",
+   "clang": "clang",
+   "make": "make",
+   "vulkaninfo": "vulkan-tools"
+  },
+  "apt": {
+   "cmake": "cmake",
+   "clang": "clang",
+   "gcc": "gcc",
+   "make": "make",
+   "vulkaninfo": "vulkan-tools"
+  }
+ },
+ "notes": [
+  "GPU drivers are hardware-specific and never installed by jadis.",
+  "Serve llama-server on 127.0.0.1 unless you deliberately expose it."
+ ]
+}
