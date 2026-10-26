@@ -1,3 +1,17 @@
+# Jadis Toolbox
+
+A small personal utility repository. It is standalone and does not integrate with BLUX.
+
+| Path | What it is |
+|---|---|
+| [`scripts/github_backup/`](scripts/github_backup/README.md) | Copies a local folder into a private GitHub repository, encrypted with `git-crypt` |
+| [`scripts/master_log/`](scripts/master_log/README.md) | Bash log script for Termux, no root required (usable with `termux-widget`) |
+| [`docs/termux-debian.md`](docs/termux-debian.md), [`docs/termux-venv.md`](docs/termux-venv.md), [`docs/termux-llm-vulcan.md`](docs/termux-llm-vulcan.md) | Termux setup notes |
+
+The rest of this README is the owner's personal operating checklist, kept as written.
+
+---
+
 # BLUX OPERATING CHECKLIST
 (Authority-Safe / Burnout-Resistant)
 
