@@ -9,7 +9,7 @@ existing content was classified:
 | `docs/termux-debian.md` | UPDATE + MIGRATE_TO_TOOLING | Rewritten as [termux-debian.md](termux-debian.md). Personal username and email became placeholders; package and diagnostic steps became `jadis bootstrap`/`doctor`/`repair`; `curl \| sh` installers replaced by clone-and-read; the empty SSH section filled in |
 | `docs/termux-venv.md` | MIGRATE_TO_TOOLING | Replaced by `jadis python` and [python.md](python.md). The `echo … >> ~/.bashrc` advice was dropped (jadis edits only marked blocks) |
 | `docs/termux-llm-vulcan.md` | REMOVE_AS_INCORRECT | Deleted (it is in git history) and replaced by [llm-vulkan.md](llm-vulkan.md) and `jadis llm` / `jadis vulkan` |
-| `scripts/github_backup`, `master_log`, `newproject`, `timelog` | CURRENT | Unchanged standalone utilities, outside the `jadis` CLI. Folding them in is Stage 33 work |
+| `scripts/github_backup`, `master_log`, `newproject`, `timelog` | CURRENT | Standalone utilities outside the `jadis` CLI (they write data). Stage 33 audited them, fixed bugs (timelog portability and CSV, a git-crypt plaintext-push guard) and added tests; see `scripts/README.md` |
 
 The deleted Vulkan document had these defects:
 - duplicated, corrupted tails ("References" repeated, with mangled link text);

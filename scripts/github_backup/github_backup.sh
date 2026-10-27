@@ -219,6 +219,21 @@ fi
 # STEP 4: COPY BACKUP AND COMMIT
 ###############################################################################
 
+# Never commit plaintext. A fresh clone carries .gitattributes asking for the git-crypt filter, but without
+# the local filter config (repository not unlocked) git silently stores files unencrypted.
+if [ -z "$(git config --local --get filter.git-crypt.smudge 2>/dev/null)" ]; then
+    if [ -f "$GIT_CRYPT_KEY_FILE" ]; then
+        echo "Unlocking git-crypt with $GIT_CRYPT_KEY_FILE..."
+        git-crypt unlock "$GIT_CRYPT_KEY_FILE" || { echo "Error: git-crypt unlock failed; nothing was committed"; rm -rf "$BACKUP_PATH"; exit 1; }
+    fi
+fi
+if [ -z "$(git config --local --get filter.git-crypt.smudge 2>/dev/null)" ] || ! grep -q '^\* filter=git-crypt' .gitattributes 2>/dev/null; then
+    echo "Error: git-crypt is not active in $BACKUP_DIR/$REPO_NAME, so the backup would be pushed unencrypted."
+    echo "Unlock it first (git-crypt unlock /path/to/${REPO_NAME}.key) or set GIT_CRYPT_KEY_FILE. Nothing was committed."
+    rm -rf "$BACKUP_PATH"
+    exit 1
+fi
+
 echo "Step 4/6: Adding backup to repository..."
 cp -r "$BACKUP_PATH" .
 git add "$BACKUP_FOLDER_NAME"

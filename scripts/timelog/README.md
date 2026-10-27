@@ -75,7 +75,10 @@ You can modify generation method in the start section, e.g.:
 
 Invoice Generation
 
-Default output: `/tmp/invoice-project-YYYYMMDD.txt`
+Default output: `$TMPDIR/invoice-project-YYYYMMDD.txt` (`/tmp` when `TMPDIR` is unset; Termux sets `TMPDIR`).
+
+Totals come from the duration recorded on each `stop` row and work with any awk (mawk, busybox, gawk).
+Commas in project names and notes are stored as `;` so the CSV columns stay aligned. Unknown commands exit 2.
 
 Add cost calculations easily within the AWK summary section.
 

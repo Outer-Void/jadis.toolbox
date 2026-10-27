@@ -18,6 +18,11 @@ Takes snapshots of Logs:
 
 ## Quick-start
 
+> **Privacy:** by default the snapshots go to shared storage (`~/storage/shared/logs`, i.e. `/sdcard/logs`),
+> which any app with storage permission can read. They include your home-directory listing, `logcat` and
+> `ps aux` (process command lines can contain tokens). Set `MASTER_LOG_DIR` (for example `$HOME/.local/state`)
+> to keep them private. The `ping` step contacts 8.8.8.8.
+
 1. Install Deps
 ```bash
 pkg update && pkg upgrade -y

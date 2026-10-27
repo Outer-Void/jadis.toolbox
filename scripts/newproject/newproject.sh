@@ -300,6 +300,7 @@ if [ -z "$PROJECT_TYPE" ]; then
     PROJECT_TYPE=$(detect_project_type "$PROJECT_NAME")
 fi
 
+# shellcheck disable=SC2034  # LICENSE_NOTICE is read by README_TEMPLATE through eval
 case "$LICENSE" in
     MIT) LICENSE_NOTICE="This project is licensed under the MIT License - see the LICENSE file for details." ;;
     GPL-3.0) LICENSE_NOTICE="This project is licensed under the GPL-3.0 License - see the LICENSE file for details." ;;

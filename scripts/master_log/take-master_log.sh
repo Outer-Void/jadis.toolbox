@@ -20,8 +20,11 @@ ROOT="$HOME"
 SNAP_PREFIX="master-log"
 MASTER_LOG="master.log"
 
-# storage target detection
-if [ -d "$HOME/storage/emulated/0" ]; then
+# storage target detection (MASTER_LOG_DIR overrides it; the default is shared storage, readable by
+# other apps that hold storage permission)
+if [ -n "${MASTER_LOG_DIR:-}" ]; then
+  BASEDIR="$MASTER_LOG_DIR"
+elif [ -d "$HOME/storage/emulated/0" ]; then
   BASEDIR="$HOME/storage/emulated/0"
 elif [ -d "$HOME/storage/shared" ]; then
   BASEDIR="$HOME/storage/shared"

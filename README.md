@@ -153,13 +153,11 @@ Not an AI agent, a package manager, a project orchestrator, a secrets vault or a
 
 ## Other utilities in this repository
 
-`scripts/` holds the earlier standalone helpers:
-- `github_backup` (git-crypt encrypted folder backup);
-- `master_log`;
-- `newproject`;
-- `timelog`.
+`scripts/` holds four standalone helpers: `timelog`, `newproject`, `master_log` and `github_backup`. They sit
+outside the `jadis` CLI because each one writes data; see [scripts/README.md](scripts/README.md) for each
+one's purpose, what it writes, its network use and its tests (`tests/test_scripts.py`).
 
-They are not part of the `jadis` CLI; see each one's README. The setup guides were rebuilt:
+The setup guides were rebuilt:
 - [docs/termux-debian.md](docs/termux-debian.md)
 - [docs/python.md](docs/python.md)
 - [docs/llm-vulkan.md](docs/llm-vulkan.md)

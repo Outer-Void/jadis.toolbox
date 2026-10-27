@@ -70,6 +70,14 @@ Security note: `GIT_CRYPT_KEY_DIR` holds encryption keys. Keep it safe and backe
 
 ---
 
+## Plaintext guard
+
+Before copying anything into the repository, the script checks that git-crypt is active there. A fresh clone
+(for example on a second device) carries `.gitattributes` asking for encryption but is not unlocked, and git
+would then store files unencrypted. If the repository is locked, the script unlocks it with
+`$GIT_CRYPT_KEY_DIR/<repo>.key` (or `GIT_CRYPT_KEY_FILE`) when that file exists; otherwise it stops and commits
+nothing. `tests/test_scripts.py` checks that a locked clone never receives a commit.
+
 ## Usage
 ```
 Make the script executable:
