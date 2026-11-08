@@ -5,7 +5,11 @@
 #  - No Root Required 
 #
 # Behavior:
-#  - prefer emulated/0 if available, else internal shared (/sdcard)
+#  - private by default: ~/.local/state/jadis/master_log/logs (owner-only), never shared storage, because the
+#    snapshots hold the home listing, logcat and process command lines (OV-54, owner decision 2026-11-07)
+#  - MASTER_LOG_DIR=<dir> writes to <dir>/logs instead (MASTER_LOG_DIR="$HOME/storage/shared" restores the old
+#    shared-storage location, readable by apps with storage permission)
+#  - the network check (ping 8.8.8.8) runs only with MASTER_LOG_PING=1
 #  - create per-snapshot files and append summary into master.log
 #  - gracefully handle missing commands, permission denials, or syscalls rejected.
 #
@@ -20,20 +24,18 @@ ROOT="$HOME"
 SNAP_PREFIX="master-log"
 MASTER_LOG="master.log"
 
-# storage target detection (MASTER_LOG_DIR overrides it; the default is shared storage, readable by
-# other apps that hold storage permission)
+# storage target: private unless MASTER_LOG_DIR says otherwise
 if [ -n "${MASTER_LOG_DIR:-}" ]; then
   BASEDIR="$MASTER_LOG_DIR"
-elif [ -d "$HOME/storage/emulated/0" ]; then
-  BASEDIR="$HOME/storage/emulated/0"
-elif [ -d "$HOME/storage/shared" ]; then
-  BASEDIR="$HOME/storage/shared"
+  LOGDIR="$BASEDIR/logs"
+  mkdir -p "$LOGDIR"
 else
-  BASEDIR="/sdcard"
+  BASEDIR="${XDG_STATE_HOME:-$HOME/.local/state}/jadis/master_log"
+  LOGDIR="$BASEDIR/logs"
+  (umask 077 && mkdir -p "$LOGDIR")
+  chmod 700 "$BASEDIR" "$LOGDIR" 2>/dev/null || true
+  umask 077  # snapshot files: owner-only
 fi
-
-LOGDIR="$BASEDIR/logs"
-mkdir -p "$LOGDIR"
 
 STAMP_FULL="$(date '+%Y-%m-%d %H:%M:%S')"
 STAMP_FILE="$(date '+%Y%m%d-%H%M%S')"
@@ -138,10 +140,15 @@ else
   _run_snapshot "ps" "$SNAP_PS" "ps"
 fi
 
-# 5) ping (network)
+# 5) ping (network): opt-in, so a snapshot never contacts the network unless asked
 SNAP_NET="$LOGDIR/${SNAP_PREFIX}-ping-${STAMP_FILE}.log"
-# use numeric IP to avoid DNS
-_run_snapshot "ping" "$SNAP_NET" "ping -c 5 8.8.8.8"
+if [ "${MASTER_LOG_PING:-0}" = "1" ]; then
+  # use numeric IP to avoid DNS
+  _run_snapshot "ping" "$SNAP_NET" "ping -c 5 8.8.8.8"
+else
+  echo "[SKIPPED] ping: network check is off (set MASTER_LOG_PING=1 to run it)" >> "$MASTERLOG_PATH"
+  SNAP_NET=""
+fi
 
 # footer summary
 cat >> "$MASTERLOG_PATH" <<EOF
@@ -152,7 +159,7 @@ Files:
  - $(basename "$SNAP_LOGCAT")
  - $(basename "$SNAP_BATT")
  - $(basename "$SNAP_PS")
- - $(basename "$SNAP_NET")
+ - ${SNAP_NET:+$(basename "$SNAP_NET")}${SNAP_NET:-(ping skipped)}
 ===============================================
 EOF
 

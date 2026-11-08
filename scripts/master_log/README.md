@@ -12,16 +12,21 @@ Takes snapshots of Logs:
 - logcat (Recent logcat snapshot)
 - termux-battery-status (Battery status snapshot)
 - ps (Active processes snapshot)
-- ping (Network snapshot)
+- ping (Network snapshot; only with `MASTER_LOG_PING=1`)
 
 ---
 
 ## Quick-start
 
-> **Privacy:** by default the snapshots go to shared storage (`~/storage/shared/logs`, i.e. `/sdcard/logs`),
-> which any app with storage permission can read. They include your home-directory listing, `logcat` and
-> `ps aux` (process command lines can contain tokens). Set `MASTER_LOG_DIR` (for example `$HOME/.local/state`)
-> to keep them private. The `ping` step contacts 8.8.8.8.
+> **Privacy (OV-54, owner decision 2026-11-07):** the snapshots include your home-directory listing, `logcat`
+> and `ps aux` (process command lines can contain tokens), so by default they go to private, owner-only storage:
+> `~/.local/state/jadis/master_log/logs`. Nothing contacts the network unless you ask.
+> - `MASTER_LOG_DIR=$HOME/storage/shared` writes to `~/storage/shared/logs` (`/sdcard/logs`) as before; any app
+>   with storage permission can read it.
+> - `MASTER_LOG_PING=1` adds the `ping` step, which contacts 8.8.8.8.
+>
+> For the widget, put the variables in the shortcut, e.g. a `~/.shortcuts/master-log-shared.sh` containing
+> `MASTER_LOG_DIR=$HOME/storage/shared MASTER_LOG_PING=1 exec bash ~/.shortcuts/take-master_log.sh`.
 
 1. Install Deps
 ```bash
@@ -69,7 +74,10 @@ bash ~/.shortcuts/take-master_log.sh
 
 5. Creates individual log snapshots
 
-Local:
+Local (default, private):
+`/data/data/com.termux/files/home/.local/state/jadis/master_log/logs`
+
+With `MASTER_LOG_DIR=$HOME/storage/shared`:
 `/data/data/com.termux/files/home/storage/shared/logs`
 
 Via (Time/Date Stamped):

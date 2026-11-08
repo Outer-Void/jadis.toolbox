@@ -4,7 +4,7 @@ A gentle, opinionated script to seed new projects. It creates folders, templates
 
 ## Features
 - Create project scaffold in `PROJECTS_DIR` (default: `~/projects`)
-- `README`, `.gitignore`, `LICENSE` creation (MIT by default)
+- `README`, `.gitignore`, `LICENSE` creation (proprietary by default; MIT and others with `-l`)
 - Language-specific templates (`python`, `node`, `bash`, `web`)
 - Git initialization and per-repo `git user/email`
 - Optional GitHub repo creation via `gh` CLI
@@ -32,7 +32,7 @@ Options
 
 -d, --description  Project description
 
--l, --license      License (MIT, GPL-3.0, Apache-2.0, BSD-3-Clause, None)
+-l, --license      License (Proprietary [default], MIT, GPL-3.0, Apache-2.0, BSD-3-Clause, None); unknown names are refused
 
 -t, --type         Project type: python, node, bash, web, or general
 
@@ -55,7 +55,9 @@ Options
 
 `DEFAULT_GIT_EMAIL` — default `git email`
 
-`DEFAULT_LICENSE` — default license (MIT)
+`DEFAULT_LICENSE` — default license (`Proprietary`)
+
+`DEFAULT_COPYRIGHT_HOLDER` — copyright holder in `LICENSE` (default `Outer-Void / Justadudeinspace (JADIS)`)
 
 `DEFAULT_INIT_COMMIT` — 1 to auto commit, 0 to skip
 

@@ -8,7 +8,9 @@
 PROJECTS_DIR="${PROJECTS_DIR:-$HOME/projects}"
 DEFAULT_GIT_USER="${DEFAULT_GIT_USER:-${USER:-Project Developer}}"
 DEFAULT_GIT_EMAIL="${DEFAULT_GIT_EMAIL:-${USER:-dev}@localhost}"
-DEFAULT_LICENSE="${DEFAULT_LICENSE:-MIT}"
+# Proprietary by default, like the organization (owner decision, OV-54, 2026-11-07); MIT etc. with -l.
+DEFAULT_LICENSE="${DEFAULT_LICENSE:-Proprietary}"
+DEFAULT_COPYRIGHT_HOLDER="${DEFAULT_COPYRIGHT_HOLDER:-Outer-Void / Justadudeinspace (JADIS)}"
 DEFAULT_INIT_COMMIT="${DEFAULT_INIT_COMMIT:-1}"
 CREATE_GITHUB_REPO="${CREATE_GITHUB_REPO:-0}"
 
@@ -87,10 +89,11 @@ build/
 EOF
 )
 
-MIT_LICENSE=$(cat << EOF
+mit_license() {
+cat << EOF
 MIT License
 
-Copyright (c) $(date +%Y) ${GIT_USER}
+Copyright (c) $(date +%Y) ${COPYRIGHT_HOLDER}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -110,7 +113,39 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 EOF
-)
+}
+
+proprietary_license() {
+cat << EOF
+Proprietary License
+
+Copyright (c) $(date +%Y) ${COPYRIGHT_HOLDER}. All rights reserved.
+
+This software and its source code are proprietary. No licence to use, copy, modify, merge, publish,
+distribute, sublicense or sell it is granted without the prior written permission of the copyright holder.
+EOF
+}
+
+# JSON string escaping for values written into package.json.
+json_escape() {
+    local s=$1
+    s=${s//\\/\\\\}
+    s=${s//\"/\\\"}
+    s=${s//$'\t'/\\t}
+    s=${s//$'\n'/\\n}
+    printf '%s' "$s"
+}
+
+write_package_json() {
+    local npm_license private=false
+    case "$LICENSE" in
+        Proprietary|None) npm_license="UNLICENSED"; private=true ;;
+        *) npm_license="$LICENSE" ;;
+    esac
+    printf '{\n  "name": "%s",\n  "version": "1.0.0",\n  "description": "%s",\n  "main": "index.js",\n  "private": %s,\n  "scripts": {\n    "test": "echo \\"Error: no test specified\\" && exit 1"\n  },\n  "keywords": [],\n  "author": "%s",\n  "license": "%s"\n}\n' \
+        "$(json_escape "$PROJECT_NAME")" "$(json_escape "$PROJECT_DESCRIPTION")" "$private" \
+        "$(json_escape "$GIT_USER")" "$npm_license" > "$1/package.json"
+}
 
 ###############################################################################
 # LANGUAGE-SPECIFIC TEMPLATES
@@ -123,9 +158,6 @@ PYTHON_FILES=(
     "tests/__init__.py:# Tests package"
 )
 
-NODEJS_FILES=(
-    "package.json:{\n  \"name\": \"${PROJECT_NAME}\",\n  \"version\": \"1.0.0\",\n  \"description\": \"${PROJECT_DESCRIPTION}\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"keywords\": [],\n  \"author\": \"${GIT_USER}\",\n  \"license\": \"${LICENSE}\"\n}"
-)
 
 BASH_FILES=(
     "src/main.sh:#!/bin/bash\n# Main script for ${PROJECT_NAME}"
@@ -142,7 +174,7 @@ Usage: $0 [OPTIONS] PROJECT_NAME
 
 Options:
   -d, --description DESCRIPTION   Set project description
-  -l, --license LICENSE           Set license (MIT, GPL-3.0, Apache-2.0, BSD-3-Clause, None)
+  -l, --license LICENSE           Set license (Proprietary [default], MIT, GPL-3.0, Apache-2.0, BSD-3-Clause, None)
   -t, --type TYPE                 Set project type (python, node, bash, web)
   -u, --user USERNAME             Set Git username
   -e, --email EMAIL               Set Git email
@@ -155,7 +187,10 @@ Examples:
   $0 -d "A wonderful project" -t python my-project
   $0 -l MIT -g my-project
 Environment variables:
-  PROJECTS_DIR, DEFAULT_GIT_USER, DEFAULT_GIT_EMAIL, DEFAULT_LICENSE
+  PROJECTS_DIR, DEFAULT_GIT_USER, DEFAULT_GIT_EMAIL, DEFAULT_LICENSE, DEFAULT_COPYRIGHT_HOLDER
+
+Repositories for the Outer-Void organization are created with LRC (`lrc create`, or `ax create`);
+this is a personal bootstrapper.
 EOF
 }
 
@@ -189,11 +224,9 @@ create_language_files() {
             ;;
         node)
             echo "Creating Node.js project structure..."
-            for file_info in "${NODEJS_FILES[@]}"; do
-                IFS=':' read -r file_path content <<< "$file_info"
-                mkdir -p "$project_dir/$(dirname "$file_path")"
-                eval "echo -e \"$content\"" > "$project_dir/$file_path"
-            done
+            # Written with printf, never eval: template text is data, not shell (the old eval ran the test
+            # script's `exit 1` and aborted the project half-made).
+            write_package_json "$project_dir"
             ;;
         bash)
             echo "Creating Bash project structure..."
@@ -300,14 +333,16 @@ if [ -z "$PROJECT_TYPE" ]; then
     PROJECT_TYPE=$(detect_project_type "$PROJECT_NAME")
 fi
 
+COPYRIGHT_HOLDER="$DEFAULT_COPYRIGHT_HOLDER"
 # shellcheck disable=SC2034  # LICENSE_NOTICE is read by README_TEMPLATE through eval
 case "$LICENSE" in
+    Proprietary) LICENSE_NOTICE="Proprietary. Copyright (c) $(date +%Y) ${COPYRIGHT_HOLDER}. All rights reserved. See the LICENSE file." ;;
     MIT) LICENSE_NOTICE="This project is licensed under the MIT License - see the LICENSE file for details." ;;
     GPL-3.0) LICENSE_NOTICE="This project is licensed under the GPL-3.0 License - see the LICENSE file for details." ;;
     Apache-2.0) LICENSE_NOTICE="This project is licensed under the Apache-2.0 License - see the LICENSE file for details." ;;
     BSD-3-Clause) LICENSE_NOTICE="This project is licensed under the BSD-3-Clause License - see the LICENSE file for details." ;;
     None) LICENSE_NOTICE="All rights reserved." ;;
-    *) echo "Warning: Unknown license '$LICENSE'. Using MIT."; LICENSE="MIT"; LICENSE_NOTICE="This project is licensed under the MIT License - see the LICENSE file for details." ;;
+    *) echo "Error: unknown license '$LICENSE' (Proprietary, MIT, GPL-3.0, Apache-2.0, BSD-3-Clause, None)"; exit 1 ;;
 esac
 
 ###############################################################################
@@ -344,7 +379,8 @@ echo "$GITIGNORE_TEMPLATE" > .gitignore
 
 if [ "$LICENSE" != "None" ]; then
     case "$LICENSE" in
-        MIT) echo "$MIT_LICENSE" > LICENSE ;;
+        Proprietary) proprietary_license > LICENSE ;;
+        MIT) mit_license > LICENSE ;;
         *) echo "# $LICENSE License" > LICENSE; echo "Please add $LICENSE license text here" >> LICENSE ;;
     esac
 fi
@@ -395,7 +431,7 @@ fi
 if [ "$CREATE_GH_REPO" -eq 0 ]; then
     echo "🌐 To create GitHub repository later:"
     echo "   cd $PWD"
-    echo "   gh repo create --public --push"
+    echo "   gh repo create --private --source . --push"
 fi
 
 echo ""
